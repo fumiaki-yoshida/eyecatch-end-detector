@@ -1,7 +1,7 @@
 import cv2
 
 SEARCH_END_MIN = 3
-MINUTES = 60  # 分を秒に変換するための定数
+MINUTES = 60
 
 
 class MovieIter(object):
@@ -15,7 +15,7 @@ class MovieIter(object):
         self.fps = self.org.get(cv2.CAP_PROP_FPS)
         self.frame_limit = int(
             self.fps * MINUTES * SEARCH_END_MIN
-        )  # 最大3分間分のフレーム数
+        )
         self.size = size
         self.inter_method = inter_method
         self.framecnt = 0
