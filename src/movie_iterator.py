@@ -9,12 +9,13 @@ class MovieIter(object):
         self,
         moviefile: str,
         size: tuple[int, int] = None,
+        serch_end_min: int = SEARCH_END_MIN,
         inter_method: int = cv2.INTER_AREA,
     ):
         self.org = cv2.VideoCapture(moviefile)
         self.fps = self.org.get(cv2.CAP_PROP_FPS)
         self.frame_limit = int(
-            self.fps * MINUTES * SEARCH_END_MIN
+            self.fps * MINUTES * serch_end_min
         )
         self.size = size
         self.inter_method = inter_method

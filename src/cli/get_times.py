@@ -1,16 +1,18 @@
 import argparse
-from src.movie_iterator import MovieIter
+from src.movie_iterator import MINUTES, SEARCH_END_MIN, MovieIter
 import glob
 
 SIZE = (640,480)
+SEARCH_END_MIN = 3
 
 parser = argparse.ArgumentParser(description="Get eyecatch end times from movie files")
 parser.add_argument("movie_directory", type=str, nargs='+', help="directory of movie files to process")
+parser.add_argument("--search_end_min", type=int, default=MINUTES, help="minutes to search for eyecatch (default: 3 minutes)")
 parser.add_argument("--threshold", type=int, default=30, help="threshold value for eyecatch detection")
 args  = parser.parse_args()
 
 def _frame_counter(path:str, size:tuple):
-    movie_iter = MovieIter(moviefile=path, size=size)
+    movie_iter = MovieIter(moviefile=path, size=size, serch_end_min=args.search_end_min)
 
     frame_count = 0
     for _ in movie_iter:
