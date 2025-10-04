@@ -1,6 +1,5 @@
 import cv2
 
-SEARCH_END_MIN = 3
 MINUTES = 60
 
 
@@ -8,8 +7,8 @@ class MovieIter(object):
     def __init__(
         self,
         moviefile: str,
+        serch_end_min: int,
         size: tuple[int, int] = None,
-        serch_end_min: int = SEARCH_END_MIN,
         inter_method: int = cv2.INTER_AREA,
     ):
         self.org = cv2.VideoCapture(moviefile)
