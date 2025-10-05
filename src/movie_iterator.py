@@ -1,4 +1,5 @@
 import cv2
+from src.metrics import MAE
 
 MINUTES = 60
 
@@ -18,6 +19,7 @@ class MovieIter(object):
         )
         self.size = size
         self.inter_method = inter_method
+        self.threshold: int
         self.framecnt = 0
 
     def __iter__(self):
@@ -34,6 +36,13 @@ class MovieIter(object):
             self.frame = cv2.resize(
                 self.frame, self.size, interpolation=self.inter_method
             )
+        return self.frame
+
+        if self.prev_frame is not None:
+            self.current_mae = MAE(self.prev_frame, self.frame)
+            if self.current_mae < self.threshold:
+                raise StopIteration()
+        self.prev_frame = self.frame
         return self.frame
 
     def __del__(self):

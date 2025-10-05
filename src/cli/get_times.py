@@ -1,8 +1,9 @@
 import argparse
-from src.movie_iterator import MINUTES, SEARCH_END_MIN, MovieIter
+from pathlib import Path 
+from src.movie_iterator import MINUTES, MovieIter
 import glob
 
-SIZE = (640,480)
+SIZE = (60,40)
 SEARCH_END_MIN = 3
 
 parser = argparse.ArgumentParser(description="Get eyecatch end times from movie files")
@@ -29,8 +30,14 @@ def get_eyecatch_times(movie_files:list[str]):
 
 
 def run_get_eyecatch(args=args):
-    path_list = glob.glob(args.movie_directory[0])
+    movie_directory = Path(args.movie_directory[0])
+    if not movie_directory.exists():
+        raise ValueError(f"Directory {movie_directory} does not exist.")
     
+    video_patterns = ["*.mp4", "*.mkv", "*.avi", "*.mov", "*.flv", "*.wmv", "*.webm"]
+    path_list = []
+    for pattern in video_patterns:
+        path_list.extend([p for p in glob.glob(str(movie_directory.joinpath(pattern)))])
     result = get_eyecatch_times(path_list)
     print(result)
 
