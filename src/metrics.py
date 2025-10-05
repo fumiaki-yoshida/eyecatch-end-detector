@@ -1,5 +1,5 @@
 import numpy as np 
 
 
-def MAE(pic):
-    return np.mean(np.abs(pic))
+def MAE(target, reference):
+    return np.mean(np.abs(target - reference))
